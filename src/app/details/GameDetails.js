@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Transition } from "react-transition-group";
 import "./GameDetails.css";
 
-const GameDetails = ({ data, onClose }) => {
+const GameDetails = ({ data, additionalDetails, onClose }) => {
   const {
     name,
     background_image,
@@ -11,12 +11,21 @@ const GameDetails = ({ data, onClose }) => {
     ratings_count,
     playtime,
     genres,
-    platforms,
-    stores,
     tags,
-    description_raw,
     short_screenshots,
   } = data;
+
+  const {
+    developers,
+    description_raw,
+    publishers,
+    esrb_rating,
+    metacritic,
+    website,
+    ratings,
+    platforms,
+    stores,
+  } = additionalDetails;
 
   const [activeScreenshotIndex, setActiveScreenshotIndex] = useState(0);
 
@@ -56,7 +65,7 @@ const GameDetails = ({ data, onClose }) => {
 
   const renderAdditionalDetails = () => {
     return (
-      <div className="grid grid-cols-2 gap-4 mb-4">
+      <div className="grid gap-4 mb-4">
         <div>
           <p className="flex items-center">
             <svg
@@ -75,8 +84,6 @@ const GameDetails = ({ data, onClose }) => {
             </svg>
             Released: {released}
           </p>
-        </div>
-        <div>
           <p className="flex items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -94,9 +101,144 @@ const GameDetails = ({ data, onClose }) => {
             </svg>
             Playtime: {playtime} hours
           </p>
+          <p className="flex items-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              className="h-5 w-5 mr-2 text-yellow-500"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M19 14l-7 7m0 0l-7-7m7 7V3"
+              />
+            </svg>
+            Metacritic Score: {metacritic || "N/A"}
+          </p>
+          <p className="flex items-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              className="h-5 w-5 mr-2 text-yellow-500"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M19 14l-7 7m0 0l-7-7m7 7V3"
+              />
+            </svg>
+            Ratings:{" "}
+            {ratings.map((dev) => (
+              <div key={dev.id} className="mx-2 my-2">
+                {dev.title} {dev.percent}%
+              </div>
+            ))}
+          </p>
+          {/* Add more details from additionalDetails object here */}
+          <p className="flex items-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              className="h-5 w-5 mr-2 text-yellow-500"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 2a8 8 0 100 16 8 8 0 000-16zm0 3a1 1 0 110 2 1 1 0 010-2zm0 2a1 1 0 110 2 1 1 0 010-2zm0 2a1 1 0 110 2 1 1 0 010-2z"
+              />
+            </svg>
+            Developer:{" "}
+            {developers.map((dev) => (
+              <p key={dev.id} className="mx-1">
+                {dev.name}
+              </p>
+            ))}
+          </p>
+          <p className="flex items-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              className="h-5 w-5 mr-2 text-yellow-500"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M19 14l-7 7m0 0l-7-7m7 7V3"
+              />
+            </svg>
+            Publisher:{" "}
+            {publishers.map((dev) => (
+              <p key={dev.id} className="mx-1">
+                {dev.name}
+              </p>
+            ))}
+          </p>
+          <p className="flex items-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              className="h-5 w-5 mr-2 text-yellow-500"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M19 14l-7 7m0 0l-7-7m7 7V3"
+              />
+            </svg>
+            ESRB Rating: {esrb_rating.name || "N/A"}
+          </p>
+          <p className="flex items-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              className="h-5 w-5 mr-2 text-yellow-500"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M19 14l-7 7m0 0l-7-7m7 7V3"
+              />
+            </svg>
+            <a
+              href={website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:underline cursor-pointer"
+            >
+              Website
+            </a>
+          </p>
         </div>
       </div>
     );
+  };
+
+  const getDescriptionSnippet = (description) => {
+    const espanolIndex = description.toLowerCase().indexOf("español");
+    if (espanolIndex !== -1) {
+      // Stop description at Español
+      return description.slice(0, espanolIndex);
+    }
+    // If Español not found, return the entire description
+    return description;
   };
 
   return (
@@ -182,9 +324,9 @@ const GameDetails = ({ data, onClose }) => {
                         </h6>
                         <p>
                           {platforms?.map((platform) => (
-                            <span key={platform.platform.id} className="mr-2">
-                              {platform.platform.name}
-                            </span>
+                            <div key={platform.platform.id} className="mx-2">
+                              {platform.platform.name} : {platform?.released_at}
+                            </div>
                           ))}
                         </p>
                       </div>
@@ -195,7 +337,14 @@ const GameDetails = ({ data, onClose }) => {
                         <p>
                           {stores?.map((store) => (
                             <span key={store.store.id} className="mr-2">
-                              {store.store.name}
+                              <a
+                                href={`https://${store?.store?.domain}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="hover:underline cursor-pointer"
+                              >
+                                {store.store.name}
+                              </a>
                             </span>
                           ))}
                         </p>
@@ -206,8 +355,7 @@ const GameDetails = ({ data, onClose }) => {
                         Description
                       </h6>
                       <p className="text-gray-700 dark:text-gray-300">
-                        To Be Added
-                        {description_raw}
+                        {getDescriptionSnippet(description_raw)}
                       </p>
                     </div>
                   </div>

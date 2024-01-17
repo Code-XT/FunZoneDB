@@ -64,18 +64,20 @@ const Movies = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4">
         {data?.results?.map((title) => (
-          <Card
-            key={title.id}
-            title={title.title}
-            description={[
-              `Released : ${title.release_date}`,
-              `Popularity: ${title.popularity}`,
-              `Average Vote: ${title.vote_average}/10`,
-            ]}
-            image={`https://image.tmdb.org/t/p/original${title.poster_path}`}
-            data={title}
-            source={"movie"}
-          />
+          <>
+            <Card
+              key={title.id}
+              title={title.title}
+              description={[
+                `Released : ${title.release_date}`,
+                `Popularity: ${title.popularity}`,
+                `Average Vote: ${title.vote_average}/10`,
+              ]}
+              image={`https://image.tmdb.org/t/p/original${title.poster_path}`}
+              data={title}
+              source={"movie"}
+            />
+          </>
         ))}
       </div>
     </div>

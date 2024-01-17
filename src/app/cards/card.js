@@ -1,11 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AnimeDetails from "../details/AnimeDetails";
 import MovieDetails from "../details/MovieDetails";
 import SeriesDetails from "../details/SeriesDetails";
 import GameDetails from "../details/GameDetails";
+import { GameDetail, MovieDetail } from "../util/requests";
 
 const Card = ({ title, description, image, data, source }) => {
   const [showDetails, setShowDetails] = useState(false);
+  const [details, setDetails] = useState(null);
+
+  const fetchMData = async () => {
+    try {
+      // Extracting movie ID from the provided data
+      const Id = data.id;
+
+      // Declare additionalDetails variable
+      let additionalDetails = null;
+
+      // Fetch additional details based on the source
+      if (source === "movie" || source === "tv") {
+        additionalDetails = await MovieDetail(Id, source);
+      } else if (source === "game") {
+        additionalDetails = await GameDetail(Id);
+      }
+
+      // Set the details state
+      setDetails(additionalDetails);
+    } catch (error) {
+      console.error("Error fetching details:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchMData();
+  }, [data, source]); // Add data and source as dependencies
+
+  console.log(details);
 
   const handleDetailsClick = () => {
     setShowDetails(true);
@@ -30,20 +60,14 @@ const Card = ({ title, description, image, data, source }) => {
       case "movie":
         return (
           <MovieDetails
-            data={data}
-            title={title}
-            description={description}
-            image={image}
+            additionalDetails={details}
             onClose={() => setShowDetails(false)}
           />
         );
       case "tv":
         return (
           <SeriesDetails
-            data={data}
-            title={title}
-            description={description}
-            image={image}
+            additionalDetails={details}
             onClose={() => setShowDetails(false)}
           />
         );
@@ -54,6 +78,7 @@ const Card = ({ title, description, image, data, source }) => {
             title={title}
             description={description}
             image={image}
+            additionalDetails={details}
             onClose={() => setShowDetails(false)}
           />
         );

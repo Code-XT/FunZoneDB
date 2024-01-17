@@ -14,12 +14,20 @@ const SearchBar = ({ onSearchChange, onSearch }) => {
     onSearch(searchTerm);
   };
 
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      // Trigger search when Enter key is pressed
+      onSearch(searchTerm);
+    }
+  };
+
   return (
     <div className="relative">
       <input
         type="text"
         value={searchTerm}
         onChange={handleSearchChange}
+        onKeyDown={handleKeyPress}
         placeholder="Search..."
         className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-neutral-700 rounded-md px-4 py-2 focus:outline-none focus:ring focus:border-blue-300 transition-colors duration-300 w-96"
       />
