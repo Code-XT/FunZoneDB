@@ -25,3 +25,26 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+/* For Chrome, Edge, and Safari */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #4f4f4f; /* Dark grey for thumb */
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Slightly darker grey on hover */
+}
+
+::-webkit-scrollbar-track {
+  background-color: #292b3b; /* Light grey for track */
+}
+
+body {
+  scrollbar-color: #4f4f4f #ddd; /* thumb and track colors */
+  scrollbar-width: thin; /* width of the scrollbar */
+}

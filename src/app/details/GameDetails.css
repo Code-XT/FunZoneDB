@@ -1,0 +1,30 @@
+.screenshot-container {
+  display: flex;
+  overflow-x: auto;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.screenshot {
+  flex: 0 0 auto;
+  width: 80px;
+  height: 45px;
+  background-size: cover;
+  background-position: center;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: border 0.3s ease;
+}
+
+.screenshot.active {
+  border-color: #3182ce;
+}
+
+/*  */
+
+.main-image-container img {
+  width: 93%;
+  height: 93%;
+  object-fit: cover;
+  border-radius: 8px;
+}
