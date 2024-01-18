@@ -34,7 +34,8 @@ const Anime = () => {
 
   const handleSearchClick = () => {
     // Trigger the search when the icon is clicked
-    search();
+    if (searchTerm === "" || searchTerm === "\n" || searchTerm === "\r") top();
+    else search();
   };
 
   const handleRadioChange = (event) => {
@@ -42,8 +43,8 @@ const Anime = () => {
   };
 
   useEffect(() => {
-    searchTerm === "" ? top() : search();
-  }, [searchType]);
+    handleSearchClick();
+  }, [searchType, searchTerm]);
 
   if (isError) {
     return <div>Error: Something went wrong</div>;
@@ -106,7 +107,6 @@ const Anime = () => {
       )}
 
       <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4">
-        {console.log(data)}
         {data?.data?.map((title) => (
           <Card
             title={title?.title}
