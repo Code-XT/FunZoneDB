@@ -25,6 +25,7 @@ const GameDetails = ({ data, additionalDetails, onClose }) => {
     ratings,
     platforms,
     stores,
+    metacritic_url,
   } = additionalDetails;
 
   const [activeScreenshotIndex, setActiveScreenshotIndex] = useState(0);
@@ -46,16 +47,10 @@ const GameDetails = ({ data, additionalDetails, onClose }) => {
 
     if (englishTags.length > 0) {
       return (
-        <div className="grid grid-cols-2 gap-4 mb-4">
+        <div className=" gap-4 mb-4">
           <div>
             <h6 className="text-lg font-semibold mb-2">Tags</h6>
-            <p>
-              {englishTags.map((tag) => (
-                <span key={tag.id} className="mr-2">
-                  {tag.name}
-                </span>
-              ))}
-            </p>
+            <p>{englishTags.map((tag) => tag.name).join(", ")}</p>
           </div>
         </div>
       );
@@ -65,168 +60,163 @@ const GameDetails = ({ data, additionalDetails, onClose }) => {
 
   const renderAdditionalDetails = () => {
     return (
-      <div className="grid gap-4 mb-4">
-        <div>
-          <p className="flex items-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              className="h-5 w-5 mr-2 text-yellow-500"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 2a8 8 0 100 16 8 8 0 000-16zm0 3a1 1 0 110 2 1 1 0 010-2zm0 2a1 1 0 110 2 1 1 0 010-2zm0 2a1 1 0 110 2 1 1 0 010-2z"
-              />
-            </svg>
-            Released: {released}
-          </p>
-          <p className="flex items-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              className="h-5 w-5 mr-2 text-yellow-500"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M5 13l4 4L19 7"
-              />
-            </svg>
-            Playtime: {playtime} hours
-          </p>
-          <p className="flex items-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              className="h-5 w-5 mr-2 text-yellow-500"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M19 14l-7 7m0 0l-7-7m7 7V3"
-              />
-            </svg>
+      <div className="grid grid-cols-2 gap-2 mb-2">
+        <p className="flex items-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="24"
+            height="24"
+            fill="none"
+            stroke="#3498db"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            className="h-5 w-5 mr-2 text-blue-500"
+          >
+            <rect x="2" y="2" width="20" height="20" rx="2" ry="2" />
+            <line x1="7" y1="2" x2="7" y2="22" />
+            <line x1="17" y1="2" x2="17" y2="22" />
+            <line x1="2" y1="12" x2="22" y2="12" />
+            <line x1="2" y1="7" x2="7" y2="7" />
+            <line x1="2" y1="17" x2="7" y2="17" />
+            <line x1="17" y1="7" x2="22" y2="7" />
+            <line x1="17" y1="17" x2="22" y2="17" />
+          </svg>
+          Released: {released}
+        </p>
+        <p className="flex items-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="24"
+            height="24"
+            fill="none"
+            stroke="#27ae60"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            className="h-5 w-5 mr-2 text-green-500"
+          >
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="12 6 12 12 16 14" />
+          </svg>
+          Playtime: {playtime} hours
+        </p>
+        <p className="flex items-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="24"
+            height="24"
+            fill="none"
+            stroke="#8e44ad"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            className="h-5 w-5 mr-2 text-purple-500"
+          >
+            <circle cx="12" cy="12" r="10" />
+            <line x1="2" y1="12" x2="22" y2="12" />
+            <path d="M12 2L12 22" />
+            <path d="M18 6L6 18" />
+          </svg>
+
+          <a
+            href={metacritic_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:underline cursor-pointer"
+          >
             Metacritic Score: {metacritic || "N/A"}
-          </p>
-          <p className="flex items-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              className="h-5 w-5 mr-2 text-yellow-500"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M19 14l-7 7m0 0l-7-7m7 7V3"
-              />
-            </svg>
-            Ratings:{" "}
-            {ratings.map((dev) => (
-              <div key={dev.id} className="mx-2 my-2">
-                {dev.title} {dev.percent}%
-              </div>
-            ))}
-          </p>
-          {/* Add more details from additionalDetails object here */}
-          <p className="flex items-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              className="h-5 w-5 mr-2 text-yellow-500"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 2a8 8 0 100 16 8 8 0 000-16zm0 3a1 1 0 110 2 1 1 0 010-2zm0 2a1 1 0 110 2 1 1 0 010-2zm0 2a1 1 0 110 2 1 1 0 010-2z"
-              />
-            </svg>
-            Developer:{" "}
-            {developers.map((dev) => (
-              <p key={dev.id} className="mx-1">
-                {dev.name}
-              </p>
-            ))}
-          </p>
-          <p className="flex items-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              className="h-5 w-5 mr-2 text-yellow-500"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M19 14l-7 7m0 0l-7-7m7 7V3"
-              />
-            </svg>
-            Publisher:{" "}
-            {publishers.map((dev) => (
-              <p key={dev.id} className="mx-1">
-                {dev.name}
-              </p>
-            ))}
-          </p>
-          <p className="flex items-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              className="h-5 w-5 mr-2 text-yellow-500"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M19 14l-7 7m0 0l-7-7m7 7V3"
-              />
-            </svg>
-            ESRB Rating: {esrb_rating.name || "N/A"}
-          </p>
-          <p className="flex items-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              className="h-5 w-5 mr-2 text-yellow-500"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M19 14l-7 7m0 0l-7-7m7 7V3"
-              />
-            </svg>
-            <a
-              href={website}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:underline cursor-pointer"
-            >
-              Website
-            </a>
-          </p>
-        </div>
+          </a>
+        </p>
+
+        <p className="flex items-start">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="24"
+            height="24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            className="h-5 w-5 mr-2 text-red-500"
+          >
+            <circle cx="12" cy="12" r="10" />
+            <line x1="8" y1="14" x2="16" y2="14" />
+            <line x1="9" y1="9" x2="9" y2="14" />
+            <line x1="15" y1="9" x2="15" y2="14" />
+          </svg>
+          Developer: {developers.map((dev) => dev.name).join(", ")}
+        </p>
+        <p className="flex items-start">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="24"
+            height="24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            className="h-5 w-5 mr-2 text-yellow-500"
+          >
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+            <line x1="3" y1="9" x2="21" y2="9" />
+            <line x1="9" y1="3" x2="9" y2="21" />
+          </svg>
+          Publisher: {publishers.map((dev) => dev.name).join(", ")}
+        </p>
+        <p className="flex items-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="24"
+            height="24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            className="h-5 w-5 mr-2 text-indigo-500"
+          >
+            <polygon points="12 2 2 7 12 12 22 7 12 2" />
+            <polyline points="2 17 12 22 22 17" />
+            <polyline points="2 12 12 17 22 12" />
+          </svg>
+          ESRB Rating: {esrb_rating.name || "N/A"}
+        </p>
+        <p className="flex items-center">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="24"
+            height="24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            className="h-5 w-5 mr-2 text-green-500"
+          >
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" y1="16" x2="12" y2="12" />
+            <line x1="12" y1="8" x2="12" y2="8" />
+          </svg>
+
+          <a
+            href={website}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:underline cursor-pointer"
+          >
+            Website
+          </a>
+        </p>
       </div>
     );
   };
@@ -330,8 +320,6 @@ const GameDetails = ({ data, additionalDetails, onClose }) => {
                           ))}
                         </p>
                       </div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-4 mb-4">
                       <div>
                         <h6 className="text-lg font-semibold mb-2">Stores</h6>
                         <p>
@@ -349,7 +337,19 @@ const GameDetails = ({ data, additionalDetails, onClose }) => {
                           ))}
                         </p>
                       </div>
+                      <div>
+                        <h6 className="text-lg font-semibold mb-2">Ratings</h6>
+                        <p>
+                          {ratings.map((dev) => (
+                            <React.Fragment key={dev.title}>
+                              {dev.title} : {dev.percent}%
+                              <br />
+                            </React.Fragment>
+                          ))}
+                        </p>
+                      </div>
                     </div>
+                    <div className="grid grid-cols-2 gap-4 mb-4"></div>
                     <div>
                       <h6 className="text-lg font-semibold mb-2">
                         Description
