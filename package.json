@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@splinetool/react-spline": "^2.2.6",
+    "@splinetool/runtime": "^1.0.33",
     "axiom": "^0.1.6",
     "axios": "^1.6.5",
     "dotenv": "^16.3.1",
