@@ -16,6 +16,12 @@ export const AnimeDetail = async (id, type) => {
   return data;
 };
 
+export const MALRecommend = async (id, type) => {
+  const res = await fetch(`${BASE_MAL}/${type}/${id}/recommendations`);
+  const data = await res.json();
+  return data;
+};
+
 export const TopMAL = async (type) => {
   const res = await fetch(`${BASE_MAL}/top/${type}`);
   const data = await res.json();

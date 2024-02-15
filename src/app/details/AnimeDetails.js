@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Transition } from "react-transition-group";
+import { MALRecommend } from "../util/requests";
+import RecommendationCard from "../cards/recommendationCard";
 
 const AnimeDetails = ({ data, onClose }) => {
   const {
+    mal_id,
     title,
     synopsis,
     images,
@@ -20,6 +23,23 @@ const AnimeDetails = ({ data, onClose }) => {
   } = data;
 
   const [showTrailer, setShowTrailer] = useState(false);
+
+  const [recommendations, setRecommendations] = useState(null);
+
+  const fetchRecommendations = async () => {
+    try {
+      const recommendationsData = await MALRecommend(mal_id, "anime");
+      setRecommendations(recommendationsData);
+    } catch (error) {
+      console.error("Error fetching recommendations:", error);
+    }
+  };
+
+  console.log(recommendations.data);
+
+  useEffect(() => {
+    fetchRecommendations();
+  }, []);
 
   useEffect(() => {
     document.body.style.overflow = showTrailer ? "hidden" : "auto";
@@ -95,6 +115,7 @@ const AnimeDetails = ({ data, onClose }) => {
                       </svg>
                     </button>
                   </div>
+
                   <div className="max-h-40 overflow-y-auto mb-4">
                     <p className="text-gray-700 dark:text-gray-300">
                       {synopsis}
@@ -247,6 +268,20 @@ const AnimeDetails = ({ data, onClose }) => {
                       More Information
                     </h6>
                     <p>{background}</p>
+                  </div>
+                  <div className="mt-4">
+                    <h6 className="text-lg font-semibold mb-2">
+                      Recommendations
+                    </h6>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4">
+                      {recommendations?.data?.map((title) => (
+                        <RecommendationCard
+                          title={title?.entry?.title}
+                          image={title?.entry?.images?.jpg?.image_url}
+                        />
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
