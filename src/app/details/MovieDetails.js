@@ -1,8 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Transition } from "react-transition-group";
+import { MovRecommend } from "../util/requests";
+import RecommendationCard from "../cards/recommendationCard";
 
 const MovieDetails = ({ additionalDetails, onClose }) => {
   const {
+    id,
     title,
     overview,
     poster_path,
@@ -17,6 +20,21 @@ const MovieDetails = ({ additionalDetails, onClose }) => {
     spoken_languages,
     status,
   } = additionalDetails;
+
+  const [recommendations, setRecommendations] = useState(null);
+
+  const fetchRecommendations = async () => {
+    try {
+      const recommendationsData = await MovRecommend(id, "movie");
+      setRecommendations(recommendationsData);
+    } catch (error) {
+      console.error("Error fetching recommendations:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchRecommendations();
+  }, []);
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -196,6 +214,21 @@ const MovieDetails = ({ additionalDetails, onClose }) => {
                   <div className="mt-4 max-h-40 mb-4 overflow-y-auto">
                     <h6 className="text-lg font-semibold mb-2">Revenue</h6>
                     <p>${revenue}</p>
+                  </div>
+                  <div className="mt-4">
+                    <h6 className="text-lg font-semibold mb-2">
+                      Recommendations
+                    </h6>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4">
+                      {recommendations?.results?.slice(0, 8).map((title) => (
+                        <RecommendationCard
+                          title={title?.title}
+                          image={`https://image.tmdb.org/t/p/original${title?.poster_path}`}
+                          votes={title?.vote_count}
+                        />
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>

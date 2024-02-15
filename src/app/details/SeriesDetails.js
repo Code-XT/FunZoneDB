@@ -1,8 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Transition } from "react-transition-group";
+import RecommendationCard from "../cards/recommendationCard";
+import { MovRecommend } from "../util/requests";
 
 const SeriesDetails = ({ additionalDetails, onClose }) => {
   const {
+    id,
     name,
     overview,
     poster_path,
@@ -22,7 +25,20 @@ const SeriesDetails = ({ additionalDetails, onClose }) => {
     homepage,
   } = additionalDetails;
 
-  console.log(additionalDetails);
+  const [recommendations, setRecommendations] = useState(null);
+
+  const fetchRecommendations = async () => {
+    try {
+      const recommendationsData = await MovRecommend(id, "tv");
+      setRecommendations(recommendationsData);
+    } catch (error) {
+      console.error("Error fetching recommendations:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchRecommendations();
+  }, []);
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -269,6 +285,21 @@ const SeriesDetails = ({ additionalDetails, onClose }) => {
                     >
                       Visit Homepage
                     </a>
+                  </div>
+                  <div className="mt-4">
+                    <h6 className="text-lg font-semibold mb-2">
+                      Recommendations
+                    </h6>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4">
+                      {recommendations?.results?.slice(0, 8).map((title) => (
+                        <RecommendationCard
+                          title={title?.title}
+                          image={`https://image.tmdb.org/t/p/original${title?.poster_path}`}
+                          votes={title?.vote_count}
+                        />
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>

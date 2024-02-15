@@ -58,6 +58,14 @@ export const MovieDetail = async (id, type) => {
   return data;
 };
 
+export const MovRecommend = async (id, type) => {
+  const res = await fetch(
+    `${BASE_MOVIES}/${type}/${id}/recommendations?api_key=${MOVIE_API}`
+  );
+  const data = await res.json();
+  return data;
+};
+
 export const MovTopRated = async (type) => {
   const res = await fetch(
     `${BASE_MOVIES}/${type}/top_rated?api_key=${MOVIE_API}`
