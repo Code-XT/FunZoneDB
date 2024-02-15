@@ -10,6 +10,9 @@ const AnimeDetails = ({ data, type, onClose }) => {
     synopsis,
     images,
     episodes,
+    chapters,
+    volumes,
+    status,
     score,
     duration,
     genres,
@@ -138,7 +141,9 @@ const AnimeDetails = ({ data, type, onClose }) => {
                             d="M12 6v6m0 0v6m0-6h6m-6 0H6"
                           />
                         </svg>
-                        Episodes: {episodes}
+                        {type === "anime"
+                          ? `Episodes: ${episodes}`
+                          : `Chapters: ${chapters}`}
                       </p>
                       <p className="flex items-center">
                         <svg
@@ -174,7 +179,9 @@ const AnimeDetails = ({ data, type, onClose }) => {
                             d="M5 13l4 4L19 7"
                           />
                         </svg>
-                        Duration: {duration}
+                        {type === "anime"
+                          ? `Duration: ${duration}`
+                          : `Volumes: ${volumes}`}
                       </p>
                       <p className="flex items-center">
                         <svg
@@ -191,7 +198,9 @@ const AnimeDetails = ({ data, type, onClose }) => {
                             d="M12 10V3M12 21v-7M5 14h14M19 8H5"
                           />
                         </svg>
-                        Airing: {airing ? "Yes" : "No"}
+                        {type === "anime"
+                          ? `Airing: ${airing ? "Yes" : "No"}`
+                          : `Status: ${status}`}
                       </p>
                     </div>
                   </div>
@@ -281,7 +290,7 @@ const AnimeDetails = ({ data, type, onClose }) => {
                         <RecommendationCard
                           title={title?.entry?.title}
                           image={title?.entry?.images?.jpg?.image_url}
-                          cardKey={title?.entry?.mal_id}
+                          votes={title?.votes}
                         />
                       ))}
                     </div>
