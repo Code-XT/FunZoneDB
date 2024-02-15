@@ -124,6 +124,7 @@ const Anime = () => {
             ]}
             data={title}
             source={"anime"}
+            type={searchType}
           />
         ))}
       </div>

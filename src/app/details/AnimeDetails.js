@@ -3,7 +3,7 @@ import { Transition } from "react-transition-group";
 import { MALRecommend } from "../util/requests";
 import RecommendationCard from "../cards/recommendationCard";
 
-const AnimeDetails = ({ data, onClose }) => {
+const AnimeDetails = ({ data, type, onClose }) => {
   const {
     mal_id,
     title,
@@ -28,14 +28,14 @@ const AnimeDetails = ({ data, onClose }) => {
 
   const fetchRecommendations = async () => {
     try {
-      const recommendationsData = await MALRecommend(mal_id, "anime");
+      const recommendationsData = await MALRecommend(mal_id, type);
       setRecommendations(recommendationsData);
     } catch (error) {
       console.error("Error fetching recommendations:", error);
     }
   };
 
-  console.log(recommendations.data);
+  console.log(recommendations?.data);
 
   useEffect(() => {
     fetchRecommendations();
@@ -263,22 +263,25 @@ const AnimeDetails = ({ data, onClose }) => {
                       </a>
                     </div>
                   </div>
-                  <div className="mt-4 max-h-40 mb-4 overflow-y-auto">
-                    <h6 className="text-lg font-semibold mb-2">
-                      More Information
-                    </h6>
-                    <p>{background}</p>
-                  </div>
+                  {background && (
+                    <div className="mt-4 max-h-40 mb-4 overflow-y-auto">
+                      <h6 className="text-lg font-semibold mb-2">
+                        More Information
+                      </h6>
+                      <p>{background}</p>
+                    </div>
+                  )}
                   <div className="mt-4">
                     <h6 className="text-lg font-semibold mb-2">
                       Recommendations
                     </h6>
 
                     <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4">
-                      {recommendations?.data?.map((title) => (
+                      {recommendations?.data?.slice(0, 8).map((title) => (
                         <RecommendationCard
                           title={title?.entry?.title}
                           image={title?.entry?.images?.jpg?.image_url}
+                          cardKey={title?.entry?.mal_id}
                         />
                       ))}
                     </div>

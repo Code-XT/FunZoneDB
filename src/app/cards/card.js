@@ -5,7 +5,7 @@ import SeriesDetails from "../details/SeriesDetails";
 import GameDetails from "../details/GameDetails";
 import { GameDetail, MovieDetail } from "../util/requests";
 
-const Card = ({ title, description, image, data, source }) => {
+const Card = ({ title, description, image, data, source, type }) => {
   const [showDetails, setShowDetails] = useState(false);
   const [details, setDetails] = useState(null);
 
@@ -35,8 +35,6 @@ const Card = ({ title, description, image, data, source }) => {
     fetchMData();
   }, [data, source]); // Add data and source as dependencies
 
-  console.log(details);
-
   const handleDetailsClick = () => {
     setShowDetails(true);
   };
@@ -54,6 +52,7 @@ const Card = ({ title, description, image, data, source }) => {
             title={title}
             description={description}
             image={image}
+            type={type}
             onClose={() => setShowDetails(false)}
           />
         );
