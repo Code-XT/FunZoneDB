@@ -21,6 +21,10 @@ const Movies = () => {
     setIsLoading(false);
   };
 
+  if (isLoading) {
+    console.log("Loading...");
+  }
+
   const top = async () => {
     const topData = await MovTopRated("movie");
     setData(topData);

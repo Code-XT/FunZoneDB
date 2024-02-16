@@ -294,7 +294,7 @@ const SeriesDetails = ({ additionalDetails, onClose }) => {
                     <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4">
                       {recommendations?.results?.slice(0, 8).map((title) => (
                         <RecommendationCard
-                          title={title?.title}
+                          title={title?.name}
                           image={`https://image.tmdb.org/t/p/original${title?.poster_path}`}
                           votes={title?.vote_count}
                         />

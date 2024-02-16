@@ -21,6 +21,10 @@ const Series = () => {
     setIsLoading(false);
   };
 
+  if (isLoading) {
+    console.log("Loading...");
+  }
+
   const top = async () => {
     const topData = await MovTopRated("tv");
     setData(topData);

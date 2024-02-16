@@ -38,8 +38,6 @@ const AnimeDetails = ({ data, type, onClose }) => {
     }
   };
 
-  console.log(recommendations?.data);
-
   useEffect(() => {
     fetchRecommendations();
   }, []);
