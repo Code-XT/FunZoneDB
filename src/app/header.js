@@ -17,11 +17,10 @@ const Header = () => {
             alt="Motivation"
             className="dark"
             width={100}
-            height={24}
+            height={100}
             priority
           />
         </Link>
-        {/* Add any additional logos or elements on the left if needed */}
       </div>
 
       <div className="flex items-center">
@@ -30,7 +29,6 @@ const Header = () => {
           href="/"
           rel="noopener noreferrer"
         >
-          {/* search bar */}
           <Image
             src="/logo.png"
             alt="Site Logo"
@@ -40,13 +38,11 @@ const Header = () => {
             priority
           />
         </Link>
-        {/* End of search bar */}
       </div>
       <div className="flex items-center gap-2 basis-auto">
-        {/* Add any additional logos or elements on the right if needed */}
         <a
           href="https://github.com/Code-XT"
-          className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0" // Added mr-4 (right margin
+          className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -56,7 +52,7 @@ const Header = () => {
             alt="CodeX Logo"
             className="dark:invert"
             width={100}
-            height={24}
+            height={100}
             priority
           />
         </a>

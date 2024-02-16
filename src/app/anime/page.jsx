@@ -69,7 +69,6 @@ const Anime = () => {
               type="radio"
               name="searchType"
               value="anime"
-              defaultChecked
               checked={searchType === "anime"}
               onChange={handleRadioChange}
               className="hidden"
@@ -109,6 +108,7 @@ const Anime = () => {
       <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4">
         {data?.data?.map((title) => (
           <Card
+            key={title?.mal_id}
             title={title?.title}
             image={title?.images?.jpg?.image_url}
             description={[
