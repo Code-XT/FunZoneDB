@@ -44,7 +44,13 @@ body {
   background-color: #292b3b; /* Light grey for track */
 }
 
-body {
-  scrollbar-color: #4f4f4f #ddd; /* thumb and track colors */
-  scrollbar-width: thin; /* width of the scrollbar */
+/* Hide scrollbar for Chrome, Safari and Opera */
+.example::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.example {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }

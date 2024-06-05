@@ -6,7 +6,7 @@ import { GamesSearch } from "../util/requests";
 
 const Games = () => {
   const [searchTerm, setsearchTerm] = useState("");
-  const [searchType, setSearchType] = useState(["4"]);
+  const [searchType, setSearchType] = useState(["4", "187", "186"]);
   const [data, setData] = useState(null);
   const [isError, setIsError] = useState(false);
 
